@@ -173,4 +173,20 @@ public class ProductController {
 			}
 			return "redirect:/listproduct";
 		}
+		
+		@GetMapping("/userviewproduct")
+		public String userViewProduct(Integer productId,Model model) {
+			Optional<ProductEntity> op = repositoryProduct.findById(productId);
+			
+			if(op.isPresent()) {
+				model.addAttribute("product",op.get());
+				return "UserViewProduct";
+			}else {
+				return "redirect:/home";
+			}
+			
+		}
+		
+		
+		
 }

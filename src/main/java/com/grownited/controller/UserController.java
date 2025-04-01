@@ -8,7 +8,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.grownited.entity.ProductEntity;
+import com.grownited.entity.UserEntity;
 import com.grownited.repository.ProductRepository;
+import com.grownited.repository.WishlistRepository;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class UserController {
@@ -16,11 +20,21 @@ public class UserController {
 	@Autowired
 	ProductRepository productRepository;
 
+	@Autowired
+	WishlistRepository wishlistRepository;
+	
 	@GetMapping("home")
-	public String home(Model model) {
+	public String home(Model model,HttpSession session) {
 
 		List<ProductEntity> allProduct = productRepository.findAll();
 		model.addAttribute("allProduct",allProduct); 
+		
+		UserEntity user  = (UserEntity)session.getAttribute("user");
+		Integer totalWishlist  = wishlistRepository.findByUserId(user.getUserId()).size();
+		model.addAttribute("totalWishlist",totalWishlist);
+		
+		
+		
 		
 		
 		return "Home";
