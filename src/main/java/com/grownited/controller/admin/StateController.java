@@ -48,7 +48,7 @@ public class StateController {
 			// ?
 			System.out.println("id ===> " + stateId);
 			Optional<StateEntity> op = repoState.findById(stateId);
-			if (op.isEmpty()) {
+			if (!op.isPresent()) {
 				// not found
 			} else {
 				// data found
@@ -70,7 +70,7 @@ public class StateController {
 		@GetMapping("editstate")
 		public String editState(Integer stateId,Model model) {
 			Optional<StateEntity> op = repoState.findById(stateId);
-			if (op.isEmpty()) {
+			if (!op.isPresent()) {
 				return "redirect:/liststate";
 			} else {
 				model.addAttribute("state",op.get());

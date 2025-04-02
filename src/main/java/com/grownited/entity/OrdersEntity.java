@@ -19,6 +19,7 @@ public class OrdersEntity {
 	private String Status;
 	private BigDecimal totalAmount;
 	private Date createdAt;
+	private Integer paymentId;
 	
 	public Integer getOrderId() {
 		return orderId;
@@ -49,6 +50,12 @@ public class OrdersEntity {
 	}
 	public void setCreatedAt(Date createdAt) {
 		this.createdAt = createdAt;
+	}
+	public Integer getPaymentId() {
+		return paymentId;
+	}
+	public void setPaymentId(Integer paymentId) {
+		this.paymentId = paymentId;
 	}
 	
 	

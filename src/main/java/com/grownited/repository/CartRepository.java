@@ -14,4 +14,8 @@ public interface CartRepository extends JpaRepository<CartEntity, Integer>{
 	
 	@Query(value =" select c.* , p.product_name , u.first_name , u.last_name from product p , users u , cart c where c.product_id = p.product_id and c.user_id = u.user_id and c.cart_id = :cartId",nativeQuery = true)
 	List<Object[]> getByCityId(Integer cartId);
+
+	
+	@Query(value =" select  p.product_name ,p.offer_price, p.product_id , p.product_imageurl1 , c.quantity,c.cart_id from product p , cart c where c.product_id = p.product_id and c.user_id = :userId",nativeQuery = true)
+	List<Object[]> getAllCartItemByUserId(Integer userId);
 }

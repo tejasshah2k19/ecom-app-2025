@@ -79,7 +79,7 @@ public class OrderDetailController {
 		@GetMapping("editorderdetail")
 		public String editOrderDetail(Integer orderDetailId,Model model) {
 			Optional<OrderDetailEntity> op = repoorderdetail.findById(orderDetailId);
-			if (op.isEmpty()) {
+			if (!op.isPresent()) {
 				return "redirect:/listorderdetail";
 			} else {
 				model.addAttribute("orderdetail",op.get());

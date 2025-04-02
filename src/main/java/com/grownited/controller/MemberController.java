@@ -44,7 +44,7 @@ public class MemberController {
 		// ?
 		System.out.println("id ===> " + memberId);
 		Optional<MemberEntity> op = repositoryMember.findById(memberId);
-		if (op.isEmpty()) {
+		if (!op.isPresent()) {
 			// not found
 		} else {
 			// data found

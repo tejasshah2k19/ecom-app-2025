@@ -84,7 +84,7 @@ public class ReviewsController {
 		@GetMapping("editreviews")
 		public String editReviews(Integer reviewId,Model model) {
 			Optional<ReviewsEntity> op = reporeviews.findById(reviewId);
-			if (op.isEmpty()) {
+			if (!op.isPresent()) {
 				return "redirect:/listreviews";
 			} else {
 				model.addAttribute("reviews",op.get());

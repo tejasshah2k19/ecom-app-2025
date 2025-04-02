@@ -11,8 +11,7 @@
 	
 	Amount : <input type="text" readonly="readonly" value="${amount}"/><Br><br> 
 	Credit Card : <input type="text" size="16" name="ccNum"/><Br><Br>  
-	CVV :  <input type="text" name="cvv" size="3"/><br><Br> 
-	ExpDate : <input type="text" name="expDate" size="5"/><br><br> 
+	ExpDate : <input type="text" name="expDate" size="4"/><br><br> 
 	
 	<input type="submit" value="Pay"/> 
 

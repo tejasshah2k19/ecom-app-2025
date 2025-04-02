@@ -78,7 +78,7 @@ public class AreaController {
 		@GetMapping("editarea")
 		public String editArea(Integer areaId,Model model) {
 			Optional<AreaEntity> op = repoArea.findById(areaId);
-			if (op.isEmpty()) {
+			if (!op.isPresent()) {
 				return "redirect:/listarea";
 			} else {
 				model.addAttribute("area",op.get());

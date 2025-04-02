@@ -137,7 +137,7 @@ public class SessionController {
 		// ?
 		System.out.println("id ===> " + userId);
 		Optional<UserEntity> op = repousers.findById(userId);
-		if (op.isEmpty()) {
+		if (!op.isPresent()) {
 			// not found
 		} else {
 			// data found
@@ -175,7 +175,7 @@ public class SessionController {
 	public String sendOtp(String email,Model model) {
 		// email valid
 				Optional<UserEntity> op = repousers.findByEmail(email);
-				if (op.isEmpty()) {
+				if (!op.isPresent()) {
 					// email invalid
 					model.addAttribute("error", "Email not found");
 					return "ForgetPassword";
@@ -199,7 +199,7 @@ public class SessionController {
 	@PostMapping("updatepassword")
 	public String updatePassword(String email,String password,String otp,Model model) {
 		Optional<UserEntity> op = repousers.findByEmail(email);
-		if (op.isEmpty()) {
+		if (!op.isPresent()) {
 			model.addAttribute("error", "Invalid Data");
 			return "ChangePassword";
 		} else {

@@ -82,7 +82,7 @@ public class CityController {
 		@GetMapping("editcity")
 		public String editCity(Integer cityId,Model model) {
 			Optional<CityEntity> op = repoCity.findById(cityId);
-			if (op.isEmpty()) {
+			if (!op.isPresent()) {
 				return "redirect:/ListCity";
 			} else {
 				model.addAttribute("city",op.get());

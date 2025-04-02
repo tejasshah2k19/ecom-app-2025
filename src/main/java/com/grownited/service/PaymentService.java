@@ -2,8 +2,13 @@ package com.grownited.service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.LocalDate;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.grownited.entity.PaymentEntity;
+import com.grownited.repository.PaymentRepository;
 
 import net.authorize.Environment;
 import net.authorize.api.contract.v1.ANetApiResponse;
@@ -23,10 +28,12 @@ import net.authorize.api.controller.base.ApiOperationBase;
 @Service
 public class PaymentService {
 
-	public boolean chargeCreditCard(String ccNum, String expDate, String cvv, Double amount,String email) {
-		String apiLoginId=""; 
-		String transactionKey="";
-		
+	
+	@Autowired
+	PaymentRepository paymentRepository;
+	
+	public Integer chargeCreditCard(String apiLoginId, String transactionKey, Double amount,String ccNum,String expDate,String email,Integer userId) {
+
 		// Set the request to operate in either the sandbox or production environment
 		ApiOperationBase.setEnvironment(Environment.SANDBOX);
 
@@ -77,7 +84,19 @@ public class PaymentService {
 					System.out.println("Message Code: " + result.getMessages().getMessage().get(0).getCode());
 					System.out.println("Description: " + result.getMessages().getMessage().get(0).getDescription());
 					System.out.println("Auth Code: " + result.getAuthCode());
+					
+					PaymentEntity payment  = new PaymentEntity();
+					
+					payment.setAmount(amount);
+					payment.setAuthCode(result.getAuthCode());
+					payment.setTranscationRefId(result.getTransId());
+					payment.setUserId(userId);
+					payment.setPaymentDate(LocalDate.now());
+					
+					paymentRepository.save(payment);
+					return payment.getPaymentId();
 				} else {
+					
 					System.out.println("Failed Transaction.");
 					if (response.getTransactionResponse().getErrors() != null) {
 						System.out.println("Error Code: "
@@ -100,6 +119,7 @@ public class PaymentService {
 				}
 			}
 		} else {
+			 
 			// Display the error code and message when response is null
 			ANetApiResponse errorResponse = controller.getErrorResponse();
 			System.out.println("Failed to get response");
@@ -109,7 +129,6 @@ public class PaymentService {
 			}
 		}
 
-		return true;
+		return -1;
 	}
-
 }

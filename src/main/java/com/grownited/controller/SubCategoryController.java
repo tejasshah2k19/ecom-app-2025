@@ -77,7 +77,7 @@ public class SubCategoryController {
 	@GetMapping("editsubcategory")
 	public String editSubCategory(Integer subCategoryId,Model model) {
 		Optional<SubCategoryEntity> op = repoSubCategory.findById(subCategoryId);
-		if (op.isEmpty()) {
+		if (!op.isPresent()) {
 			return "redirect:/listsubcategory";
 		} else {
 			model.addAttribute("subcategory",op.get());

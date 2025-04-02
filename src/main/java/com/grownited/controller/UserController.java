@@ -50,10 +50,6 @@ public class UserController {
 		return "ProductDetail";
 	}
 
-	@GetMapping("shopingcart")
-	public String shopingcart() {
-		return "ShopingCart";
-	}
 
 	@GetMapping("blog")
 	public String blog() {
